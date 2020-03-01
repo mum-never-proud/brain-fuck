@@ -1,2 +1,2 @@
 # brainfuck
-implementation of brain fuck in js
+implementation of brainfuck in js
