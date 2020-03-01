@@ -1,0 +1,28 @@
+{
+  "name": "brainfuck",
+  "version": "1.0.0",
+  "description": "implementation of brainfuck in js",
+  "main": "./src/brainfuck.js",
+  "scripts": {
+    "build": "./node_modules/.bin/grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mum-never-proud/brainfuck.git"
+  },
+  "keywords": [
+    "brain",
+    "fuck",
+    "esoteric"
+  ],
+  "author": "mum-never-proud",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mum-never-proud/brainfuck/issues"
+  },
+  "homepage": "https://github.com/mum-never-proud/brainfuck#readme",
+  "devDependencies": {
+    "grunt": "1.0.4",
+    "grunt-contrib-uglify-es": "3.3.0"
+  }
+}
