@@ -1,10 +1,13 @@
 {
   "name": "brainfuck",
   "version": "1.0.0",
-  "description": "implementation of brainfuck in js",
-  "main": "./src/brainfuck.js",
+  "description": "brainfuck implementation in js",
+  "main": "./src/brain-fuck.js",
   "scripts": {
-    "build": "./node_modules/.bin/grunt"
+    "dev": "parcel watch ./src/brain-fuck.js --global '$B'",
+    "build": "parcel build ./src/brain-fuck.js --global '$B'",
+    "test:coverage": "jest --coverage",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -13,7 +16,9 @@
   "keywords": [
     "brain",
     "fuck",
-    "esoteric"
+    "estoric",
+    "js",
+    "implementation"
   ],
   "author": "mum-never-proud",
   "license": "ISC",
@@ -22,7 +27,10 @@
   },
   "homepage": "https://github.com/mum-never-proud/brainfuck#readme",
   "devDependencies": {
-    "grunt": "1.0.4",
-    "grunt-contrib-uglify-es": "3.3.0"
+    "@babel/core": "7.10.2",
+    "@babel/preset-env": "7.10.2",
+    "eslint": "7.2.0",
+    "jest": "26.0.1",
+    "parcel": "1.12.4"
   }
 }
