@@ -40,7 +40,7 @@ describe('brain fuck test', () => {
   });
 
   // dont waste 20s to detect infinite loop, also you need to settimeout for jest which is 5s by default
-  // can be commented out if desperate to check :)
+  // can be uncommented if desperate to check :)
 
   // it('should exit after 20s (infinite loop)', done => {
   //   const bf = new $B(
