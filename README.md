@@ -1,2 +1,2 @@
 # brainfuck
-implementation of brainfuck in js
+slightly different from the actual implementation where this lets you to create your own custom symbols instead of default ones
