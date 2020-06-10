@@ -1,3 +1,4 @@
+import now from 'performance-now';
 import { MAX_CHAR_VALUE, EXTEND_SIZE, MEM_SIZE } from './constants/index';
 import { jumpBackward, jumpForward } from './utils/jump';
 
@@ -17,10 +18,10 @@ class BrainFuck {
       throw Error('nothing to compile');
     }
 
-    const t1 = performance.now();
+    const t1 = now();
 
     while (this.iptr < this.program.length) {
-      if (performance.now() - t1 > 20000) { // infinite detection, there might be a better way than this :)
+      if (now() - t1 > 20000) { // infinite detection, there might be a better way than this :)
         this.infinite = true;
         break;
       }
@@ -71,7 +72,7 @@ class BrainFuck {
       this.iptr++;
     }
 
-    const t2 = performance.now();
+    const t2 = now();
 
     return {
       program: this.program,
