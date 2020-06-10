@@ -1,3 +1,4 @@
+import now from 'performance-now';
 import { assertString, assertObject } from './utils/assert';
 import { BRAIN_FUCK_CONFIG, MAX_CHAR_VALUE, EXTEND_SIZE, MEM_SIZE } from './constants/index';
 import { jumpBackward, jumpForward } from './utils/jump';
@@ -36,39 +37,39 @@ class BrainFuck {
     }
 
     const {
-      memoryPointerRight,
-      memoryPointerLeft,
-      instructionPointerIncrement,
-      instructionPointerDecrement,
+      memoryPointerUp,
+      memoryPointerDown,
+      instructionPointerUp,
+      instructionPointerDown,
       output,
       input,
       loopStart,
       loopEnd
     } = this.brainFuckConfig.instructions;
     const fetchInstruction = () => this.tokens.slice(this.iptr, this.iptr + wordCount).join(splitter);
-    const t1 = performance.now();
+    const t1 = now();
 
     while (this.iptr < this.tokens.length) {
-      if (performance.now() - t1 > 20000) { // infinite detection, there might be a better way than this :)
+      if (now() - t1 > 20000) { // infinite detection, there might be a better way than this :)
         this.infinite = true;
         break;
       }
 
       switch (fetchInstruction()) {
-        case memoryPointerRight:
+        case memoryPointerUp:
           if (this.mptr >= this.memory.length - 1) {
             this.memory = this.memory.concat(Array(EXTEND_SIZE).fill(0));
           }
 
           this.mptr++;
           break;
-        case memoryPointerLeft:
+        case memoryPointerDown:
           this.mptr = this.mptr - 1 < 0 ? this.mptr : this.mptr - 1;
           break;
-        case instructionPointerIncrement:
+        case instructionPointerUp:
           this.memory[this.mptr] = (this.memory[this.mptr] + 1) % MAX_CHAR_VALUE;
           break;
-        case instructionPointerDecrement:
+        case instructionPointerDown:
           let val = this.memory[this.mptr] - 1;
 
           if (val < 0) {
@@ -107,7 +108,7 @@ class BrainFuck {
       this.iptr += wordCount;
     }
 
-    const t2 = performance.now();
+    const t2 = now();
 
     return {
       program: this.program,

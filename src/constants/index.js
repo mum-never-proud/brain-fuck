@@ -13,10 +13,10 @@ const BRAIN_FUCK_CONFIG = {
     ']'
   ],
   instructions: {
-    memoryPointerRight: '>',
-    memoryPointerLeft: '<',
-    instructionPointerIncrement: '+',
-    instructionPointerDecrement: '-',
+    memoryPointerUp: '>',
+    memoryPointerDown: '<',
+    instructionPointerUp: '+',
+    instructionPointerDown: '-',
     output: '.',
     input: ',',
     loopStart: '[',
