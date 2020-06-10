@@ -2,7 +2,7 @@
   "name": "brainfuck",
   "version": "1.0.0",
   "description": "brainfuck implementation in js",
-  "main": "./src/brain-fuck.js",
+  "main": "./dist/brain-fuck.js",
   "scripts": {
     "dev": "parcel watch ./src/brain-fuck.js --global '$B'",
     "build": "parcel build ./src/brain-fuck.js --global '$B'",
