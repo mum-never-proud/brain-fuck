@@ -120,14 +120,55 @@ class BrainFuck {
     };
   }
 
-  convert (program) {
+  /*
+  * kind of terrible at naming :(
+  * converts the given brainfuck to the custom brainfuck
+  * @param {string} program - any js program
+  * @param {object} config - config of custom brainfuck
+  * @returns {string}
+  *
+  * e.g.
+  *
+  * consider the given brainfuck that prints "hello world" to be converted to custom brainfuck
+  *
+  * program: +[-[<<[+[--->]-[<<<]]]>>>-]>-.---.>..>.<<<<-.<+.>>>>>.>.<<.<-.
+  *
+  * with the given config
+  *
+  * config: {
+  *   "instructions": {
+  *     "instructionPointerUp": "oink. oink?",
+  *     "instructionPointerDown": "oink? oink.",
+  *     "memoryPointerUp": "oink. oink.",
+  *     "memoryPointerDown": "oink! oink!",
+  *     "input": "",
+  *     "output": "oink! oink.",
+  *     "loopStart": "oink! oink?",
+  *     "loopEnd": "oink? oink!"
+  *   },
+  *   "splitter": " "
+  * }
+  *
+  * expected output
+  *
+  * oink. oink? oink! oink? oink? oink. oink! oink? oink! oink! oink! oink! oink! oink? oink. oink? oink! oink? oink?
+  * oink. oink? oink. oink? oink. oink. oink. oink? oink! oink? oink. oink! oink? oink! oink! oink! oink! oink! oink!
+  * oink? oink! oink? oink! oink? oink! oink. oink. oink. oink. oink. oink. oink? oink. oink? oink! oink. oink. oink?
+  * oink. oink! oink. oink? oink. oink? oink. oink? oink. oink! oink. oink. oink. oink! oink. oink! oink. oink. oink.
+  * oink! oink. oink! oink! oink! oink! oink! oink! oink! oink! oink? oink. oink! oink. oink! oink! oink. oink? oink!
+  * oink. oink. oink. oink. oink. oink. oink. oink. oink. oink. oink. oink! oink. oink. oink. oink! oink. oink! oink!
+  * oink! oink! oink! oink. oink! oink! oink? oink. oink! oink.
+  */
+
+  static convert (program, config) {
     assertString(program, 'program');
+    assertObject(config, 'config');
 
     return converter(
       program,
-      this.brainFuckConfig.splitter,
+      config.splitter,
       BRAIN_FUCK_CONFIG.instructions,
-      this.brainFuckConfig.instructions
+      config.instructions
     );
   }
 }
