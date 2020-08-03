@@ -11,6 +11,7 @@ class BrainFuck {
     this.iptr = 0; // instruction pointer
     this.mptr = 0; // memory pointer
     this.infinite = false;
+    this.inputPtr = 0;
   }
 
   compile () {
@@ -53,9 +54,9 @@ class BrainFuck {
           this.output += String.fromCharCode(this.memory[this.mptr]);
           break;
         case ',':
-          this.memory[this.mptr] = this.input.charCodeAt(0);
-
-          this.input = this.input.slice(1);
+          if (this.inputPtr < this.input.length) {
+            this.memory[this.mptr] = this.input.charCodeAt(this.inputPtr++);
+          }
           break;
         case '[':
           if (!this.memory[this.mptr]) {
