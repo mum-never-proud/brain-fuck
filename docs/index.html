@@ -1,0 +1,147 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>brain-fuck</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap" rel="stylesheet" />
+  <style>
+    html,
+    body {
+      font-family: "Fira Code";
+      background-color: #121212;
+      color: #FB3;
+    }
+
+    h1,
+    h3,
+    h6 {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+
+    h3 {
+      font-size: 24px;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    textarea.form-control, textarea.form-control:focus, input[type="text"]:focus, textarea.form-control[readonly], input[type="text"] {
+      background-color: #222831;
+      border: 1px solid #FB3;
+      color: #FB3;
+      outline: none;
+    }
+
+    .btn-primary:disabled {
+      cursor: not-allowed;
+    }
+
+    footer {
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p class="display-4 text-center mt-3">brain-fuck</p>
+        <p class="text-center font-italic mt-3">esoteric programming language</p>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12">
+        <div class="alert alert-danger text-center" role="alert">
+          <p><b>Syntax is not validated right now, beware that any brain-fuck program with syntax errors may end up in an infinite loop!</b></p>
+        </div>
+        <div class="alert alert-info" role="alert">
+          <p class="text-center"><b><u>Upcoming Enhancements</u></b></p>
+          <ul>
+            <li><p>Compilation will be moved to a WebWorker to avoid blocking main thread (which is happening right now).</p></li>
+            <li><p>Currently any valid infinite program is terminated after 20s, in order to run some infinite or long running programs like <b>Mandelbrot set</b>, <b>Tower of Hanio</b> etc. more control will be given to terminate program at any point.</p></li>
+          </ul>
+        </div>
+        <form>
+          <div class="form-group">
+            <label for="input">Args</label>
+            <input id="args" type="text" class="form-control" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="paste or type a valid brain-fuck program">Paste/Type a valid brain-fuck program</label>
+            <textarea id="input" rows="15" class="form-control" autocomplete="off">
++++++ +++++             initialize counter (cell #0) to 10
+[                       use loop to set the next four cells to 70/100/30/10
+&gt; +++++ ++              add  7 to cell #1
+&gt; +++++ +++++           add 10 to cell #2
+&gt; +++                   add  3 to cell #3
+&gt; +                     add  1 to cell #4
+&lt;&lt;&lt;&lt; -                  decrement counter (cell #0)
+]
+&gt; ++ .                  print 'H'
+&gt; + .                   print 'e'
++++++ ++ .              print 'l'
+.                       print 'l'
++++ .                   print 'o'
+&gt; ++ .                  print ' '
+&lt;&lt; +++++ +++++ +++++ .  print 'W'
+&gt; .                     print 'o'
++++ .                   print 'r'
+----- - .               print 'l'
+----- --- .             print 'd'
+&gt; + .                   print '!'
+&gt; .                     print '\n'
+            </textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12">
+        <button id="run" class="btn btn-primary">Run</button>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12">
+        <textarea id="output" rows="15" class="form-control" autocomplete="off" readonly></textarea>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12">
+        <footer>
+          <p class="text-center font-italic">made with much ❤️</p>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <!-- <script src="https://cdn.jsdelivr.net/gh/mum-never-proud/brain-fuck/dist/brain-fuck.js"></script> -->
+  <script src="../dist/brain-fuck.js"></script>
+  <script>
+    (function () {
+      const args = document.getElementById('args');
+      const input = document.getElementById('input');
+      const output = document.getElementById('output');
+      const run = document.getElementById('run');
+
+      input.addEventListener('input', function(e) {
+        if (e.target.value) {
+          run.removeAttribute('disabled');
+        } else {
+          run.setAttribute('disabled', 'disabled');
+        }
+      });
+      run.addEventListener('click', function() {
+        const compiledOutput = new $B(input.value.replace(/\n/gi, ''), args.value).compile();
+        console.log(compiledOutput);
+        output.value = compiledOutput.output;
+      });
+    })();
+  </script>
+</body>
+</html>
