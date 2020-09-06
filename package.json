@@ -2,12 +2,12 @@
   "name": "brainfuck",
   "version": "1.0.0",
   "description": "brainfuck implementation in js",
-  "main": "./dist/brain-fuck.js",
+  "main": "./dist/brain-fuck.min.js",
   "scripts": {
-    "dev": "parcel watch ./src/brain-fuck.js --global '$B'",
-    "build": "parcel build ./src/brain-fuck.js --global '$B'",
-    "test:coverage": "jest --coverage",
-    "test": "jest"
+    "dev": "parcel watch ./src/brain-fuck.js --global '$B' -o brain-fuck.min.js",
+    "build": "parcel build ./src/brain-fuck.js --global '$B' -o brain-fuck.min.js",
+    "test": "jest",
+    "test-coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",

@@ -5,76 +5,57 @@
   <title>brain-fuck</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/gh/mum-never-proud/unified-demo-theme@latest/dist/styles/theme.min.css" rel="stylesheet" type="text/css" />
   <style>
-    html,
-    body {
-      font-family: "Fira Code";
-      background-color: #121212;
-      color: #FB3;
+    .spinner {
+      width: unset;
+      height: unset;
+      left: 5px;
+      display: none;
     }
 
-    h1,
-    h3,
-    h6 {
-      margin: 0;
+    .spinner::before {
+      width: 20px;
+      height: 20px;
     }
 
-    h1 {
-      font-size: 32px;
-    }
-
-    h3 {
-      font-size: 24px;
-    }
-
-    textarea {
-      resize: none;
-    }
-
-    textarea.form-control, textarea.form-control:focus, input[type="text"]:focus, textarea.form-control[readonly], input[type="text"] {
-      background-color: #222831;
-      border: 1px solid #FB3;
-      color: #FB3;
-      outline: none;
-    }
-
-    .btn-primary:disabled {
-      cursor: not-allowed;
-    }
-
-    footer {
-      font-size: 12px;
+    #run {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      z-index: 1;
     }
   </style>
-</head>
+  </head>
 <body>
+  <div class="header">
+    <h1 class="text-center">brain-fuck</h1>
+  </div>
   <div class="container">
-    <div class="row">
+    <div class="row mt-3">
       <div class="col-12">
-        <p class="display-4 text-center mt-3">brain-fuck</p>
-        <p class="text-center font-italic mt-3">esoteric programming language</p>
+        <p class="text-center">brain-fuck implementation in JS</p>
       </div>
     </div>
     <div class="row mt-3">
       <div class="col-12">
         <div class="alert alert-danger text-center" role="alert">
-          <p><b>Syntax is not validated right now, beware that any brain-fuck program with syntax errors may end up in an infinite loop!</b></p>
+          <b>Syntax is not validated right now, beware that any brain-fuck program with syntax errors may end up in an infinite loop!</b>
         </div>
-        <div class="alert alert-info" role="alert">
-          <p class="text-center"><b><u>Upcoming Enhancements</u></b></p>
-          <ul>
-            <li><p>Compilation will be moved to a WebWorker to avoid blocking main thread (which is happening right now).</p></li>
-            <li><p>Currently any valid infinite program is terminated after 20s, in order to run some infinite or long running programs like <b>Mandelbrot set</b>, <b>Tower of Hanio</b> etc. more control will be given to terminate program at any point.</p></li>
-          </ul>
+        <div class="alert alert-info text-center" role="alert">
+          Currently any valid infinite program is terminated after 20s, in order to run some infinite or long running programs like <b>Mandelbrot set</b>, <b>Tower of Hanio</b> etc. more control will be given to terminate program at any point.
         </div>
         <form>
           <div class="form-group">
+            <div class="form-group text-center">
+              <label for="hint" class="text-muted">You can find some good brain-fuck programs <a href="http://www.hevanet.com/cristofd/brainfuck/" target="_blank" rel="noopener">here</a>.</label>
+            </div>
             <label for="input">Args</label>
             <input id="args" type="text" class="form-control" autocomplete="off" />
           </div>
           <div class="form-group">
             <label for="paste or type a valid brain-fuck program">Paste/Type a valid brain-fuck program</label>
+            <span class="spinner"></span>
             <textarea id="input" rows="15" class="form-control" autocomplete="off">
 +++++ +++++             initialize counter (cell #0) to 10
 [                       use loop to set the next four cells to 70/100/30/10
@@ -99,35 +80,40 @@
 &gt; .                     print '\n'
             </textarea>
           </div>
+          <div class="form-group">
+            <label for="brain-fuck output">Output</label>
+            <textarea id="output" rows="15" class="form-control" autocomplete="off" readonly></textarea>
+          </div>
         </form>
       </div>
     </div>
-    <div class="row mt-3">
-      <div class="col-12">
-        <button id="run" class="btn btn-primary">Run</button>
-      </div>
-    </div>
-    <div class="row mt-3">
-      <div class="col-12">
-        <textarea id="output" rows="15" class="form-control" autocomplete="off" readonly></textarea>
-      </div>
-    </div>
-    <div class="row mt-3">
+    <button id="run" class="btn btn-primary">Run</button>
+    <div class="row mt-5">
       <div class="col-12">
         <footer>
-          <p class="text-center font-italic">made with much ❤️</p>
+          <p class="text-center">made with much<img alt="logo" src="https://cdn.jsdelivr.net/gh/mum-never-proud/unified-demo-theme@latest/dist/images/icecream-love.svg" width="50" height="50"></p>
         </footer>
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/gh/mum-never-proud/brain-fuck/dist/brain-fuck.js"></script>
   <script>
     (function () {
+      if (!window.Worker) {
+        return alert('WebWorker is not supported in this browser');
+      }
+
+      const worker = new window.Worker('./brain-fuck-er.js');
       const args = document.getElementById('args');
       const input = document.getElementById('input');
       const output = document.getElementById('output');
       const run = document.getElementById('run');
+      const spinner = document.getElementsByClassName('spinner')[0];
 
+      worker.addEventListener('message', function (e) {
+        spinner.style.display = 'none';
+        run.removeAttribute('disabled');
+        output.value = e.data.output.output;
+      });
       input.addEventListener('input', function(e) {
         if (e.target.value) {
           run.removeAttribute('disabled');
@@ -136,8 +122,13 @@
         }
       });
       run.addEventListener('click', function() {
-        const compiledOutput = new $B(input.value.replace(/\n/gi, ''), args.value).compile();
-        output.value = compiledOutput.output;
+        spinner.style.display = 'inline';
+        run.setAttribute('disabled', 'disabled');
+        worker.postMessage({
+          type: 'compile-brain-fuck',
+          args: args.value,
+          program: input.value
+        });
       });
     })();
   </script>

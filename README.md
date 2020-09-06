@@ -1,5 +1,7 @@
 # brainfuck
 
-implementation of brainfuck in js
+Implementation of brainfuck in JS.
 
-check out <a href="https://mum-never-proud.github.io/brain-fuck/">brain-fuck</a>!
+## Demo
+
+Check out <a href="https://mum-never-proud.github.io/brain-fuck/">brain-fuck</a>!
